@@ -31,7 +31,7 @@ new() {
             mkdir "$CODE_DIR"
         fi
         cp "$ROOT_DIR/leetcode/template.cpp" "$CODE_FILE"
-        leetcode show $1 -c -l cpp >> $CODE_FILE
+        leetcode show $2 -c -l cpp >> $CODE_FILE
         echo "Created file $CODE_FILE."
     fi
     echo "Opening file $CODE_FILE..."

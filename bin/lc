@@ -23,6 +23,7 @@ CODE_DIR="$ROOT_DIR/leetcode/$2-$3"
 CODE_FILE="$CODE_DIR/$2-$3.cpp"
 
 new() {
+    PROBLEM_ID=$1
     if [ -f "$CODE_FILE" ]; then
         echo "File $CODE_FILE already exists."
     else
@@ -31,7 +32,7 @@ new() {
             mkdir "$CODE_DIR"
         fi
         cp "$ROOT_DIR/leetcode/template.cpp" "$CODE_FILE"
-        leetcode show $2 -c -l cpp >> $CODE_FILE
+        leetcode show $PROBLEM_ID -c -l cpp >> $CODE_FILE
         echo "Created file $CODE_FILE."
     fi
     echo "Opening file $CODE_FILE..."
@@ -41,7 +42,7 @@ new() {
 test() {
     if [ ! -f "$CODE_FILE" ]; then
         echo "File $CODE_FILE does not exist."
-        echo "Please run 'lc new $2 $3' first."
+        echo "Please run 'lc new $1 $2' first."
         return 1
     fi
     leetcode test "$CODE_FILE"
@@ -50,7 +51,7 @@ test() {
 submit() {
     if [ ! -f "$CODE_FILE" ]; then
         echo "File $CODE_FILE does not exist."
-        echo "Please run 'lc new $2 $3' first."
+        echo "Please run 'lc new $1 $2' first."
         return 1
     fi
     leetcode submit "$CODE_FILE"
@@ -58,13 +59,13 @@ submit() {
 
 case $1 in
     new)
-        new
+        new $2
         ;;
     test)
-        test
+        test $2 $3
         ;;
     submit)
-        submit
+        submit $2 $3
         ;;
     *)
         echo "Unknown command $1"

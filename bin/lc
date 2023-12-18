@@ -1,0 +1,73 @@
+#!/bin/bash
+
+# Usage info
+if [[ $# -ne 3 ]]; then
+    echo "Usage: $0 <command> <question_id> <question_title>"
+    echo "command: new, test, submit"
+    exit 1
+fi
+
+# Require leetcode-cli
+if ! command -v leetcode &> /dev/null; then
+    echo "Please install leetcode-cli first."
+    echo "https://github.com/skygragon/leetcode-cli"
+    exit 1
+fi
+
+# Get the root directory of the project
+cd $(dirname $0)
+cd ..
+ROOT_DIR=$(pwd)
+
+CODE_FILE="$CODE_DIR/$2-$3.cpp"
+CODE_DIR="$ROOT_DIR/leetcode/$2-$3"
+
+new() {
+    if [ -f "$CODE_FILE" ]; then
+        echo "File $CODE_FILE already exists."
+    else
+        echo "Creating file $CODE_FILE..."
+        if [ ! -d "$CODE_DIR" ]; then
+            mkdir "$CODE_DIR"
+        fi
+        cp "$ROOT_DIR/leetcode/template.cpp" "$CODE_FILE"
+        leetcode show $1 -c -l cpp >> $CODE_FILE
+        echo "Created file $CODE_FILE."
+    fi
+    echo "Opening file $CODE_FILE..."
+    code -r $CODE_FILE
+}
+
+test() {
+    if [ ! -f "$CODE_FILE" ]; then
+        echo "File $CODE_FILE does not exist."
+        echo "Please run 'lc new $2 $3' first."
+        return 1
+    fi
+    leetcode test "$CODE_FILE"
+}
+
+submit() {
+    if [ ! -f "$CODE_FILE" ]; then
+        echo "File $CODE_FILE does not exist."
+        echo "Please run 'lc new $2 $3' first."
+        return 1
+    fi
+    leetcode submit "$CODE_FILE"
+}
+
+case $1 in
+    new)
+        new
+        ;;
+    test)
+        test
+        ;;
+    submit)
+        submit
+        ;;
+    *)
+        echo "Unknown command $1"
+        exit 1
+        ;;
+esac

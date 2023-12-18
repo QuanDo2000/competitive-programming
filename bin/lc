@@ -19,8 +19,8 @@ cd $(dirname $0)
 cd ..
 ROOT_DIR=$(pwd)
 
-CODE_FILE="$CODE_DIR/$2-$3.cpp"
 CODE_DIR="$ROOT_DIR/leetcode/$2-$3"
+CODE_FILE="$CODE_DIR/$2-$3.cpp"
 
 new() {
     if [ -f "$CODE_FILE" ]; then

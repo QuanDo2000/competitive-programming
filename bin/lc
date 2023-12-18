@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Usage info
-if [[ $# -ne 3 ]]; then
-    echo "Usage: $0 <command> <question_id> <question_title>"
+if [[ $# -ne 2 ]]; then
+    echo "Usage: $0 <command> <question_id>"
     echo "command: new, test, submit"
     exit 1
 fi
@@ -19,8 +19,8 @@ cd $(dirname $0)
 cd ..
 ROOT_DIR=$(pwd)
 
-CODE_DIR="$ROOT_DIR/leetcode/$2-$3"
-CODE_FILE="$CODE_DIR/$2-$3.cpp"
+CODE_DIR="$ROOT_DIR/leetcode/$2"
+CODE_FILE="$CODE_DIR/$2.cpp"
 
 new() {
     PROBLEM_ID=$1
@@ -42,19 +42,27 @@ new() {
 test() {
     if [ ! -f "$CODE_FILE" ]; then
         echo "File $CODE_FILE does not exist."
-        echo "Please run 'lc new $1 $2' first."
+        echo "Please run 'lc new $1' first."
         return 1
     fi
-    leetcode test "$CODE_FILE"
+    TEMP_FILE="$CODE_DIR/$1.test.cpp"
+    tail -n +4 "$CODE_FILE" > "$TEMP_FILE"
+    leetcode test "$TEMP_FILE" --local
+    rm "$TEMP_FILE"
+    rm "$ROOT_DIR/.tmp.cpp.run.cpp"
+    rm "$ROOT_DIR/.tmp.cpp.run.exe"
 }
 
 submit() {
     if [ ! -f "$CODE_FILE" ]; then
         echo "File $CODE_FILE does not exist."
-        echo "Please run 'lc new $1 $2' first."
+        echo "Please run 'lc new $1' first."
         return 1
     fi
+    TEMP_FILE="$CODE_DIR/$1.test.cpp"
+    tail -n +4 "$CODE_FILE" > "$TEMP_FILE"
     leetcode submit "$CODE_FILE"
+    rm "$TEMP_FILE"
 }
 
 case $1 in
@@ -62,10 +70,10 @@ case $1 in
         new $2
         ;;
     test)
-        test $2 $3
+        test $2
         ;;
     submit)
-        submit $2 $3
+        submit $2
         ;;
     *)
         echo "Unknown command $1"

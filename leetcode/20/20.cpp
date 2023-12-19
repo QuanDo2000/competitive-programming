@@ -7,7 +7,7 @@ class Solution {
   bool isValid(string s) {
     stack<char> st;
 
-    for (char c : s) {
+    for (char c : s) {  // Use range-based for loop
       if (c == '(' || c == '[' || c == '{') {
         st.push(c);
       } else {
@@ -15,6 +15,7 @@ class Solution {
             (c == ')' && st.top() != '(') ||
             (c == ']' && st.top() != '[') ||
             (c == '}' && st.top() != '{')) {
+          // Use short-circuit evaluation is faster than multiple if statements
           return false;
         }
         st.pop();

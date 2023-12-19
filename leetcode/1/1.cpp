@@ -5,19 +5,17 @@ using namespace std;
 class Solution {
  public:
   vector<int> twoSum(vector<int>& nums, int target) {
-    vector<int> ans;
-    map<int, int> m;
+    unordered_map<int, int> m;
+    int n = nums.size();
 
-    for (int i = 0; i < nums.size(); i++) {
+    for (int i = 0; i < n; i++) {
       int complement = target - nums[i];
-      if (m.find(complement) != m.end()) {
-        ans.push_back(m[complement]);
-        ans.push_back(i);
-        return ans;
+      if (m.count(complement)) {
+        return {m[complement], i};
       }
       m[nums[i]] = i;
     }
 
-    return ans;
+    return {};
   }
 };

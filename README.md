@@ -7,6 +7,20 @@ This repository is dedicated to practicing competitive programming. It contains 
 ### Requirements
 
 - [leetcode-cli](https://github.com/skygragon/leetcode-cli)
+  - There is currently an issue where it is not possible to login to LeetCode using the CLI.
+  - The workaround is to login to LeetCode using the browser, and then copy the session cookie and CSRF token from the browser to the CLI.
+  - After logging in using the browser, create the file `user.json` in `~/.lc/leetcode/` and add the following content:
+
+```json
+{
+    "login": "<Login Email/Username>",
+    "sessionId": "<LEETCODE_SESSION>",
+    "sessionCSRF": "<csrftoken>",
+    "name": "<LeetCode user ID>,
+    "paid": false,
+}
+```
+
 - VSCode `code` command configured in the PATH environment variable
 
 ### Usage

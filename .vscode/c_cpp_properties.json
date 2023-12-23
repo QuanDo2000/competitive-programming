@@ -32,6 +32,35 @@
       "cStandard": "c17",
       "cppStandard": "c++17",
       "intelliSenseMode": "macos-gcc-arm64"
+    },
+    {
+      "name": "Linux",
+      "compilerPath": "/usr/bin/g++",
+      "compilerArgs": [
+        "-Wall",
+        "-Wextra",
+        "-Wshadow",
+        "-O2",
+        "-std=c++17",
+        "-pedantic",
+        "-Wformat=2",
+        "-Wfloat-equal",
+        "-Wconversion",
+        "-Wlogical-op",
+        "-Wshift-overflow=2",
+        "-Wduplicated-cond",
+        "-Wcast-qual",
+        "-Wcast-align",
+        "-D_GLIBCXX_DEBUG",
+        "-D_GLIBCXX_DEBUG_PEDANTIC",
+        "-D_FORTIFY_SOURCE=2",
+        "-fno-sanitize-recover",
+        "-fstack-protector"
+      ],
+      "includePath": ["${workspaceFolder}/**"],
+      "cStandard": "c17",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "linux-gcc-arm64"
     }
   ],
   "version": 4
